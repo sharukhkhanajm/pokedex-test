@@ -20,6 +20,8 @@ function Pokemons() {
 
   return (
     <>
+      <h1 className="text-center text-4xl font-bold">Pokemon</h1>
+
       <SearchPokemon />
 
       {loading ? <CardsSkeleton /> : null}
