@@ -1,23 +1,9 @@
-import { useContext } from "react";
-
-import { getPokemons } from "../services/pokemon";
-import { IBasePokemon } from "../types/pokemon.types";
-import { useStore } from "../zustand/pokemon.store";
-import Button from "./Button";
+import { getPokemons } from '../services/pokemon';
+import { useStore } from '../zustand/pokemon.store';
+import Button from './Button';
 
 function Pagination() {
-  const {
-    pageNumber,
-    limit,
-    count,
-    previous,
-    next,
-    cache,
-    updateStore,
-    updatePokemons,
-    setLoading,
-    loading,
-  } = useStore();
+  const { pageNumber, limit, count, previous, next, cache, updateStore, setLoading, loading } = useStore();
 
   const onPrevious = async () => {
     if (previous) {
@@ -73,16 +59,12 @@ function Pagination() {
   };
 
   return (
-    <nav
-      className="bg-white py-3 flex items-center justify-between border-t border-gray-200"
-      aria-label="Pagination"
-    >
+    <nav className="bg-white py-3 flex items-center justify-between border-t border-gray-200" aria-label="Pagination">
       <div className="hidden sm:block">
         <p className="text-sm text-gray-700">
-          Showing{" "}
-          <span className="font-medium">{limit * (pageNumber - 1) || "1"}</span>{" "}
-          to <span className="font-medium">{limit * pageNumber}</span> of{" "}
-          <span className="font-medium">{count}</span> results
+          Showing <span className="font-medium">{limit * (pageNumber - 1) || '1'}</span> to{' '}
+          <span className="font-medium">{limit * pageNumber}</span> of <span className="font-medium">{count}</span>{' '}
+          results
         </p>
       </div>
       <div className="flex-1 flex justify-between sm:justify-end space-x-4">

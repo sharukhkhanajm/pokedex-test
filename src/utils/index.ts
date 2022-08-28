@@ -1,3 +1,1 @@
-export const getBaseUrl = () => {
-  return "https://pokeapi.co/api/v2/pokemon";
-};
+export const getBaseUrl = () => 'https://pokeapi.co/api/v2/pokemon';

@@ -1,7 +1,7 @@
-import { IPokemon, TBasePokemonWithResult } from "../types/pokemon.types";
+import { IPokemon, TBasePokemonWithResult } from '../types/pokemon.types';
 
-const getAllPokemonsByUrls = (urls: string[]) => {
-  return Promise.all(
+const getAllPokemonsByUrls = (urls: string[]) =>
+  Promise.all(
     urls.map(
       (url) =>
         fetch(url)
@@ -10,7 +10,6 @@ const getAllPokemonsByUrls = (urls: string[]) => {
       // .catch((error: Error) => ({ error, url }))
     )
   );
-};
 
 export const getPokemons = async (url: string) => {
   try {
@@ -26,7 +25,7 @@ export const getPokemons = async (url: string) => {
     };
   } catch (e) {
     return {
-      error: "Failed to get pokemons",
+      error: 'Failed to get pokemons',
     };
   }
 };

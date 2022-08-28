@@ -1,7 +1,7 @@
-import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Pokemons from "./components/Pokemons";
-import Pokemon from "./routes/Pokemon";
+import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Pokemons from './components/Pokemons';
+import Pokemon from './routes/Pokemon';
 
 function App() {
   return (
