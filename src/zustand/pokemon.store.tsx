@@ -31,6 +31,12 @@ interface Store {
     }[]
   ) => void;
   updateStore: (s: any) => void;
+  getPokemonById: (id: number) =>
+    | {
+        data: IPokemon;
+        url: string;
+      }
+    | undefined;
 }
 
 const BASE_URL = "https://pokeapi.co/api/v2/pokemon";
@@ -61,6 +67,11 @@ export const useStore = create<Store>((set, get) => ({
         ...states,
       };
     });
+  },
+  getPokemonById: (id: number) => {
+    const pokemons = get().pokemons;
+    const pokemon = pokemons.find((pokemon) => pokemon.data.id === id);
+    return pokemon;
   },
   setInitialStates: async () => {
     const limit = get().limit;
