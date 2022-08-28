@@ -2,6 +2,7 @@ import create from "zustand";
 import produce from "immer";
 import { IPokemon } from "../types/pokemon.types";
 import { getPokemons } from "../services/pokemon";
+import { getBaseUrl } from "../utils";
 
 interface Store {
   limit: number;
@@ -39,8 +40,6 @@ interface Store {
     | undefined;
 }
 
-const BASE_URL = "https://pokeapi.co/api/v2/pokemon";
-
 export const useStore = create<Store>((set, get) => ({
   // states
   limit: 20,
@@ -75,7 +74,7 @@ export const useStore = create<Store>((set, get) => ({
   },
   setInitialStates: async () => {
     const limit = get().limit;
-    const url = `${BASE_URL}?limit=${limit}`;
+    const url = `${getBaseUrl()}?limit=${limit}`;
     const pokemonsData = await getPokemons(url);
     set((state) => {
       return {

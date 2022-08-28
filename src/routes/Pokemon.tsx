@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { IPokemon } from "../types/pokemon.types";
+import { getBaseUrl } from "../utils";
 import { useStore } from "../zustand/pokemon.store";
 
 function Pokemon() {
@@ -25,7 +26,7 @@ function Pokemon() {
   useEffect(() => {
     if (!pokemon && id) {
       const getPokemon = async () => {
-        const url = `https://pokeapi.co/api/v2/pokemon/${id}/`;
+        const url = `${getBaseUrl()}/${id}/`;
         const res = await fetch(url);
         const data = await res.json();
         setPokemon({

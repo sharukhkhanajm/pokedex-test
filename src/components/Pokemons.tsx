@@ -3,9 +3,11 @@ import Pagination from "./Pagination";
 import PokemonCard from "./PokemonCard";
 import { Link } from "react-router-dom";
 import { useStore } from "../zustand/pokemon.store";
+import SearchPokemon from "./SearchPokemon";
 
 function Pokemons() {
-  const { pokemons, setInitialStates } = useStore();
+  const { pokemons, setInitialStates, next, previous, count, limit } =
+    useStore();
 
   useEffect(() => {
     setInitialStates();
@@ -15,6 +17,7 @@ function Pokemons() {
 
   return (
     <>
+      <SearchPokemon />
       {pokemons?.length ? (
         <>
           <ul
@@ -30,9 +33,11 @@ function Pokemons() {
               );
             })}
           </ul>
-          <div className="mt-8">
-            <Pagination />
-          </div>
+          {count > limit ? (
+            <div className="mt-8">
+              <Pagination />
+            </div>
+          ) : null}
         </>
       ) : (
         "no pokemons found"
