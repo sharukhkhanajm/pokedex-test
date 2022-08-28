@@ -1,0 +1,11 @@
+html {
+  @apply h-full;
+}
+
+body {
+  @apply h-full;
+}
+
+#root {
+  @apply h-full;
+}
