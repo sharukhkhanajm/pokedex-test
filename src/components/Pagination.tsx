@@ -16,7 +16,8 @@ function Pagination() {
         setLoading(true);
         const pokemonsData = await getPokemons(previous);
         if (pokemonsData.error) {
-          //
+          // handle error here
+          // show some dialog box or notification
         } else {
           updateStore({
             ...pokemonsData,
@@ -58,13 +59,18 @@ function Pagination() {
     }
   };
 
+  let to = limit * pageNumber;
+
+  if (to > count) {
+    to = count;
+  }
+
   return (
     <nav className="bg-white py-3 flex items-center justify-between border-t border-gray-200" aria-label="Pagination">
       <div className="hidden sm:block">
         <p className="text-sm text-gray-700">
           Showing <span className="font-medium">{limit * (pageNumber - 1) || '1'}</span> to{' '}
-          <span className="font-medium">{limit * pageNumber}</span> of <span className="font-medium">{count}</span>{' '}
-          results
+          <span className="font-medium">{to}</span> of <span className="font-medium">{count}</span> results
         </p>
       </div>
       <div className="flex-1 flex justify-between sm:justify-end space-x-4">

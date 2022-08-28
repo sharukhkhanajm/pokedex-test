@@ -16,7 +16,7 @@ const debounce = <F extends (...args: Parameters<F>) => ReturnType<F>>(func: F, 
 };
 
 function SearchPokemon() {
-  const { updateStore, setInitialStates, setLoading } = useStore();
+  const { updateStore, setInitialStates, setLoading, search, setSearch } = useStore();
   const [error, setError] = useState('');
 
   const onChange = useCallback(
@@ -24,6 +24,7 @@ function SearchPokemon() {
       setError('');
       try {
         const { value } = e.target;
+        setSearch(value);
         if (!value) {
           setInitialStates();
           return;
@@ -51,7 +52,7 @@ function SearchPokemon() {
         setLoading(false);
       }
     },
-    [setInitialStates, setLoading, updateStore]
+    [setInitialStates, setLoading, setSearch, updateStore]
   );
 
   const debouncedFunc = useMemo(() => debounce(onChange, 500), [onChange]);
@@ -63,12 +64,16 @@ function SearchPokemon() {
         Search Pokemon
       </label>
       <input
-        onChange={debouncedFunc}
+        onChange={(e) => {
+          setSearch(e.target.value);
+          debouncedFunc(e);
+        }}
         type="text"
         name="search-pokemon"
         id="search-pokemon"
         className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
         placeholder="Search Pokemon Here..."
+        value={search}
       />
     </div>
   );

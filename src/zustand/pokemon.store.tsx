@@ -23,6 +23,7 @@ interface Store {
     }[];
   };
   loading: boolean;
+  search: string;
 
   // actions
   setInitialStates: () => void;
@@ -40,6 +41,7 @@ interface Store {
       }
     | undefined;
   setLoading: (loading: boolean) => void;
+  setSearch: (search: string) => void;
 }
 
 export const useStore = create<Store>((set, get) => ({
@@ -52,12 +54,19 @@ export const useStore = create<Store>((set, get) => ({
   previous: '',
   cache: {},
   loading: false,
+  search: '',
 
   // actions
   updatePokemons: (pokemons) => {
     set((state) => ({
       ...state,
       pokemons,
+    }));
+  },
+  setSearch: (s) => {
+    set((state) => ({
+      ...state,
+      search: s,
     }));
   },
   updateStore: (states: any) => {
