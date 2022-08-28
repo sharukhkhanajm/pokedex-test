@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { IPokemon as PokemonType } from "../types/pokemon.types";
-import { IPokemon } from "./../types/pokemon.types";
+import { IPokemon } from "../types/pokemon.types";
 
 type Props = {
   url: string;
   pokemon: IPokemon;
 };
 
-function Pokemon({ pokemon, url }: Props) {
+function PokemonCard({ pokemon, url }: Props) {
   const { id, name, sprites } = pokemon;
   return (
     <li className="col-span-1 flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200 cursor-pointer duration-200 transition-all hover:scale-105 hover:shadow-md">
@@ -26,4 +26,4 @@ function Pokemon({ pokemon, url }: Props) {
   );
 }
 
-export default Pokemon;
+export default PokemonCard;
