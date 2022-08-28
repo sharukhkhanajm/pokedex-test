@@ -17,7 +17,7 @@ const debounce = <F extends (...args: Parameters<F>) => ReturnType<F>>(
 };
 
 function SearchPokemon() {
-  const { updateStore, setInitialStates } = useStore();
+  const { updateStore, setInitialStates, loading, setLoading } = useStore();
   const [error, setError] = useState("");
 
   const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +28,8 @@ function SearchPokemon() {
         setInitialStates();
         return;
       }
-      const url = `${getBaseUrl()}/${value}`;
+      setLoading(true);
+      const url = `${getBaseUrl()}/${value.trim().toLowerCase()}`;
       const res = await fetch(url);
       const data = await res.json();
       setError("");
@@ -46,6 +47,8 @@ function SearchPokemon() {
       });
     } catch (e) {
       setError("Please check the Pokemon name");
+    } finally {
+      setLoading(false);
     }
   };
 

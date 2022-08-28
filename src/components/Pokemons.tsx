@@ -4,9 +4,10 @@ import PokemonCard from "./PokemonCard";
 import { Link } from "react-router-dom";
 import { useStore } from "../zustand/pokemon.store";
 import SearchPokemon from "./SearchPokemon";
+import CardsSkeleton from "./CardsSkeleton";
 
 function Pokemons() {
-  const { pokemons, setInitialStates, next, previous, count, limit } =
+  const { pokemons, setInitialStates, next, previous, count, limit, loading } =
     useStore();
 
   useEffect(() => {
@@ -18,7 +19,10 @@ function Pokemons() {
   return (
     <>
       <SearchPokemon />
-      {pokemons?.length ? (
+
+      {loading ? <CardsSkeleton /> : null}
+
+      {pokemons?.length && !loading ? (
         <>
           <ul
             role="list"

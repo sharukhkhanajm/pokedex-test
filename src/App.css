@@ -9,3 +9,7 @@ body {
 #root {
   @apply h-full;
 }
+
+.react-loading-skeleton {
+  @apply h-60;
+}

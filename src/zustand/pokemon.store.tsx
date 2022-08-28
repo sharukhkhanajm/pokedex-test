@@ -22,6 +22,7 @@ interface Store {
       previous?: string;
     }[];
   };
+  loading: boolean;
 
   // actions
   setInitialStates: Function;
@@ -38,6 +39,7 @@ interface Store {
         url: string;
       }
     | undefined;
+  setLoading: (loading: boolean) => void;
 }
 
 export const useStore = create<Store>((set, get) => ({
@@ -49,6 +51,7 @@ export const useStore = create<Store>((set, get) => ({
   next: "",
   previous: "",
   cache: {},
+  loading: false,
 
   // actions
   updatePokemons: (pokemons) => {
@@ -67,23 +70,37 @@ export const useStore = create<Store>((set, get) => ({
       };
     });
   },
+  setLoading: (loading) => {
+    set((state) => {
+      return {
+        ...state,
+        loading,
+      };
+    });
+  },
   getPokemonById: (id: number) => {
     const pokemons = get().pokemons;
     const pokemon = pokemons.find((pokemon) => pokemon.data.id === id);
     return pokemon;
   },
   setInitialStates: async () => {
-    const limit = get().limit;
-    const url = `${getBaseUrl()}?limit=${limit}`;
-    const pokemonsData = await getPokemons(url);
-    set((state) => {
-      return {
-        ...state,
-        ...pokemonsData,
-        cache: {
-          [url]: pokemonsData.pokemons,
-        },
-      };
-    });
+    get().setLoading(true);
+    try {
+      const limit = get().limit;
+      const url = `${getBaseUrl()}?limit=${limit}`;
+      const pokemonsData = await getPokemons(url);
+      set((state) => {
+        return {
+          ...state,
+          ...pokemonsData,
+          cache: {
+            [url]: pokemonsData.pokemons,
+          },
+        };
+      });
+    } catch (e) {
+    } finally {
+      get().setLoading(false);
+    }
   },
 }));

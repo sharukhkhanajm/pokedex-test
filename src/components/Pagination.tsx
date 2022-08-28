@@ -15,6 +15,8 @@ function Pagination() {
     cache,
     updateStore,
     updatePokemons,
+    setLoading,
+    loading,
   } = useStore();
 
   const onPrevious = async () => {
@@ -25,15 +27,21 @@ function Pagination() {
           pageNumber: pageNumber - 1,
         });
       } else {
+        setLoading(true);
         const pokemonsData = await getPokemons(previous);
-        updateStore({
-          ...pokemonsData,
-          pageNumber: pageNumber - 1,
-          cache: {
-            ...cache,
-            [previous]: pokemonsData,
-          },
-        });
+        if (pokemonsData.error) {
+          //
+        } else {
+          updateStore({
+            ...pokemonsData,
+            pageNumber: pageNumber - 1,
+            cache: {
+              ...cache,
+              [previous]: pokemonsData,
+            },
+            loading: false,
+          });
+        }
       }
     }
   };
@@ -45,15 +53,21 @@ function Pagination() {
           pageNumber: pageNumber + 1,
         });
       } else {
+        setLoading(true);
         const pokemonsData = await getPokemons(next);
-        updateStore({
-          ...pokemonsData,
-          pageNumber: pageNumber + 1,
-          cache: {
-            ...cache,
-            [next]: pokemonsData,
-          },
-        });
+        if (pokemonsData.error) {
+          //
+        } else {
+          updateStore({
+            ...pokemonsData,
+            pageNumber: pageNumber + 1,
+            cache: {
+              ...cache,
+              [next]: pokemonsData,
+            },
+            loading: false,
+          });
+        }
       }
     }
   };
@@ -72,10 +86,10 @@ function Pagination() {
         </p>
       </div>
       <div className="flex-1 flex justify-between sm:justify-end space-x-4">
-        <Button disabled={!previous} onClick={onPrevious}>
+        <Button disabled={!previous || loading} onClick={onPrevious}>
           Previous
         </Button>
-        <Button disabled={!next} onClick={onNext}>
+        <Button disabled={!next || loading} onClick={onNext}>
           Next
         </Button>
       </div>

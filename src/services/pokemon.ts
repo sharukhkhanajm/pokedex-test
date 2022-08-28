@@ -13,14 +13,20 @@ const getAllPokemonsByUrls = (urls: string[]) => {
 };
 
 export const getPokemons = async (url: string) => {
-  const res = await fetch(url);
-  const data = (await res.json()) as TBasePokemonWithResult;
-  const pokemonUrls = data.results.map((p) => p.url);
-  const allPokemonData = await getAllPokemonsByUrls(pokemonUrls);
-  return {
-    pokemons: allPokemonData,
-    count: data.count,
-    next: data.next,
-    previous: data.previous,
-  };
+  try {
+    const res = await fetch(url);
+    const data = (await res.json()) as TBasePokemonWithResult;
+    const pokemonUrls = data.results.map((p) => p.url);
+    const allPokemonData = await getAllPokemonsByUrls(pokemonUrls);
+    return {
+      pokemons: allPokemonData,
+      count: data.count,
+      next: data.next,
+      previous: data.previous,
+    };
+  } catch (e) {
+    return {
+      error: "Failed to get pokemons",
+    };
+  }
 };
