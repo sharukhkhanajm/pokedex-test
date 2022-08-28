@@ -28,10 +28,13 @@ function Pokemons() {
         <>
           <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {pokemons.map((pokemon) => {
-              const { data, url } = pokemon;
+              const { data, error } = pokemon;
+              if (error) {
+                return null;
+              }
               return (
                 <Link to={`/pokemon/${data.id}`} key={data.id}>
-                  <PokemonCard url={url} pokemon={data} />{' '}
+                  <PokemonCard pokemon={data} />
                 </Link>
               );
             })}

@@ -1,7 +1,6 @@
 import { IPokemon } from '../types/pokemon.types';
 
 type Props = {
-  // url: string;
   pokemon: IPokemon;
 };
 

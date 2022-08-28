@@ -9,6 +9,7 @@ interface Store {
   pokemons: {
     data: IPokemon;
     url: string;
+    error?: null;
   }[];
   count: number;
   next?: string;

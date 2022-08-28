@@ -2,12 +2,11 @@ import { IPokemon, TBasePokemonWithResult } from '../types/pokemon.types';
 
 const getAllPokemonsByUrls = (urls: string[]) =>
   Promise.all(
-    urls.map(
-      (url) =>
-        fetch(url)
-          .then((r) => r.json())
-          .then((data: IPokemon) => ({ data, url }))
-      // .catch((error: Error) => ({ error, url }))
+    urls.map((url) =>
+      fetch(url)
+        .then((r) => r.json())
+        .then((data: IPokemon) => ({ data, url }))
+        .catch((error: Error) => ({ error, url }))
     )
   );
 
