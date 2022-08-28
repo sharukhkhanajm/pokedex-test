@@ -4,6 +4,8 @@ import { useStore } from '../zustand/pokemon.store';
 import { IPokemon } from '../types/pokemon.types';
 
 // debounce the request on frequent type
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 const debounce = <F extends (...args: Parameters<F>) => ReturnType<F>>(func: F, waitFor: number) => {
   // eslint-disable-next-line no-undef
   let timeout: NodeJS.Timeout;
