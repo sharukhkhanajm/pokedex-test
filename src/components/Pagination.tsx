@@ -7,6 +7,7 @@ function Pagination() {
 
   const onPrevious = async () => {
     if (previous) {
+      // check if data already in the cache object.
       if (cache[previous]) {
         updateStore({
           ...cache[previous],
@@ -14,11 +15,9 @@ function Pagination() {
         });
       } else {
         setLoading(true);
+        // get the the pokemon data and save in cache
         const pokemonsData = await getPokemons(previous);
-        if (pokemonsData.error) {
-          // handle error here
-          // show some dialog box or notification
-        } else {
+        if (!pokemonsData.error) {
           updateStore({
             ...pokemonsData,
             pageNumber: pageNumber - 1,
@@ -28,12 +27,15 @@ function Pagination() {
             },
             loading: false,
           });
+        } else {
+          // show some error message or dialog/notification
         }
       }
     }
   };
   const onNext = async () => {
     if (next) {
+      // check if data already in the cache object.
       if (cache[next]) {
         updateStore({
           ...cache[next],
@@ -41,10 +43,9 @@ function Pagination() {
         });
       } else {
         setLoading(true);
+        // get the the pokemon data and save in cache
         const pokemonsData = await getPokemons(next);
-        if (pokemonsData.error) {
-          //
-        } else {
+        if (!pokemonsData.error) {
           updateStore({
             ...pokemonsData,
             pageNumber: pageNumber + 1,
@@ -54,6 +55,8 @@ function Pagination() {
             },
             loading: false,
           });
+        } else {
+          // show some error message or dialog/notification
         }
       }
     }

@@ -1,11 +1,11 @@
 /* eslint-disable no-nested-ternary */
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Pagination from './Pagination';
-import PokemonCard from './PokemonCard';
+import Pagination from '../components/Pagination';
+import PokemonCard from '../components/PokemonCard';
 import { useStore } from '../zustand/pokemon.store';
-import SearchPokemon from './SearchPokemon';
-import CardsSkeleton from './CardsSkeleton';
+import SearchPokemon from '../components/SearchPokemon';
+import CardsSkeleton from '../components/CardsSkeleton';
 
 function Pokemons() {
   const { pokemons, setInitialStates, count, limit, loading } = useStore();

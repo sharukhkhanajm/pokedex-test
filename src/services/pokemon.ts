@@ -23,6 +23,8 @@ export const getPokemons = async (url: string) => {
       previous: data.previous,
     };
   } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e);
     return {
       error: 'Failed to get pokemons',
     };

@@ -3,6 +3,7 @@ import { getBaseUrl } from '../utils';
 import { useStore } from '../zustand/pokemon.store';
 import { IPokemon } from '../types/pokemon.types';
 
+// debounce the request on frequent type
 const debounce = <F extends (...args: Parameters<F>) => ReturnType<F>>(func: F, waitFor: number) => {
   // eslint-disable-next-line no-undef
   let timeout: NodeJS.Timeout;
@@ -25,6 +26,7 @@ function SearchPokemon() {
       try {
         const { value } = e.target;
         setSearch(value);
+        // reset the states on input empty
         if (!value) {
           setInitialStates();
           return;
@@ -46,8 +48,10 @@ function SearchPokemon() {
           next: '',
           pageNumber: 1,
         });
-      } catch (_) {
+      } catch (err) {
         setError('Please check the Pokemon name');
+        // eslint-disable-next-line no-console
+        console.error(err);
       } finally {
         setLoading(false);
       }

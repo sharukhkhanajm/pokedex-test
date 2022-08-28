@@ -22,7 +22,7 @@ function Card({ name }: { name: string }) {
 }
 
 function Pokemon() {
-  const { getPokemonById } = useStore();
+  const { getPokemonById, loading, setLoading } = useStore();
   const { id } = useParams();
 
   const [pokemon, setPokemon] = useState<
@@ -35,23 +35,37 @@ function Pokemon() {
 
   useEffect(() => {
     if (id) {
+      // take out the pokemon from the states if exits
       const savedPokemonData = getPokemonById(parseInt(id));
       if (savedPokemonData) {
         setPokemon(savedPokemonData);
       } else {
+        // if no pokemon was found of this id then we fetch the new data
         const getPokemon = async () => {
-          const url = `${getBaseUrl()}/${id}/`;
-          const res = await fetch(url);
-          const data = (await res.json()) as IPokemon;
-          setPokemon({
-            data,
-            url,
-          });
+          try {
+            setLoading(true);
+            const url = `${getBaseUrl()}/${id}/`;
+            const res = await fetch(url);
+            const data = (await res.json()) as IPokemon;
+            setPokemon({
+              data,
+              url,
+            });
+          } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error(e);
+          } finally {
+            setLoading(false);
+          }
         };
         getPokemon();
       }
     }
-  }, [getPokemonById, id]);
+  }, [getPokemonById, id, setLoading]);
+
+  if (loading) {
+    return <>loading...</>;
+  }
 
   return (
     <div>
