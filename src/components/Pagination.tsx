@@ -1,21 +1,63 @@
+import { useContext } from "react";
+
+import { getPokemons } from "../services/pokemon";
 import { IBasePokemon } from "../types/pokemon.types";
+import { useStore } from "../zustand/pokemon.store";
 import Button from "./Button";
 
-type Props = {
-  onNext: React.MouseEventHandler<HTMLButtonElement>;
-  onPrevious: React.MouseEventHandler<HTMLButtonElement>;
-  data: IBasePokemon;
-  limit: number;
-  pageNumber: number;
-};
+function Pagination() {
+  const {
+    pageNumber,
+    limit,
+    count,
+    previous,
+    next,
+    cache,
+    updateStore,
+    updatePokemons,
+  } = useStore();
 
-function Pagination({
-  onNext,
-  onPrevious,
-  data: { count, next, previous },
-  limit,
-  pageNumber,
-}: Props) {
+  const onPrevious = async () => {
+    if (previous) {
+      if (cache[previous]) {
+        updateStore({
+          ...cache[previous],
+          pageNumber: pageNumber - 1,
+        });
+      } else {
+        const pokemonsData = await getPokemons(previous);
+        updateStore({
+          ...pokemonsData,
+          pageNumber: pageNumber - 1,
+          cache: {
+            ...cache,
+            [previous]: pokemonsData,
+          },
+        });
+      }
+    }
+  };
+  const onNext = async () => {
+    if (next) {
+      if (cache[next]) {
+        updateStore({
+          ...cache[next],
+          pageNumber: pageNumber + 1,
+        });
+      } else {
+        const pokemonsData = await getPokemons(next);
+        updateStore({
+          ...pokemonsData,
+          pageNumber: pageNumber + 1,
+          cache: {
+            ...cache,
+            [next]: pokemonsData,
+          },
+        });
+      }
+    }
+  };
+
   return (
     <nav
       className="bg-white py-3 flex items-center justify-between border-t border-gray-200"
