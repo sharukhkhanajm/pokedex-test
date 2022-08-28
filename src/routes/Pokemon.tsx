@@ -39,18 +39,18 @@ function Pokemon() {
 
   return (
     <div>
-      <div className="flex space-x-4">
+      <div className="lg:flex space-x-4">
         <div className="">
           <h1 className="text-3xl font-semibold capitalize text-center">
             {pokemon?.data.name}
           </h1>
           <img
             src={pokemon?.data.sprites.front_default}
-            className="w-[30rem] h-[30rem]"
+            className="w-[30rem] h-[30rem] mx-auto"
           />
         </div>
         <div className="flex-1 space-y-8">
-          <div className="bg-indigo-300 p-4 rounded-md text-lg w-[50%]">
+          <div className="bg-indigo-300 p-4 rounded-md text-lg lg:w-[50%]">
             <div className="flex justify-between">
               <div>
                 <p className="text-white">height</p>
@@ -96,7 +96,7 @@ function CardWrapper({
       <h3 className="text-3xl leading-6 font-medium text-gray-900 capitalize">
         {title}
       </h3>
-      <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">{children}</dl>
+      <dl className="mt-5 grid grid-cols-2 gap-5 sm:grid-cols-3">{children}</dl>
     </div>
   );
 }

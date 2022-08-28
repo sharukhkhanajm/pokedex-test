@@ -58,7 +58,7 @@ function SearchPokemon() {
 
   return (
     <>
-      <div className="mx-24 my-10">
+      <div className="lg:mx-24 my-10">
         <p className="text-red-400 mb-4 font-semibold">{error}</p>
         <label htmlFor="search-pokemon" className="sr-only">
           Search Pokemon
