@@ -89,15 +89,19 @@ export const useStore = create<Store>((set, get) => ({
       const limit = get().limit;
       const url = `${getBaseUrl()}?limit=${limit}`;
       const pokemonsData = await getPokemons(url);
-      set((state) => {
-        return {
-          ...state,
-          ...pokemonsData,
-          cache: {
-            [url]: pokemonsData.pokemons,
-          },
-        };
-      });
+      if (pokemonsData.error) {
+        //
+      } else {
+        set((state) => {
+          return {
+            ...state,
+            ...pokemonsData,
+            cache: {
+              [url]: pokemonsData,
+            },
+          };
+        });
+      }
     } catch (e) {
     } finally {
       get().setLoading(false);

@@ -19,26 +19,23 @@ function Pokemon() {
 
   useEffect(() => {
     if (id) {
-      setPokemon(getPokemonById(parseInt(id)));
+      const savedPokemonData = getPokemonById(parseInt(id));
+      if (savedPokemonData) {
+        setPokemon(savedPokemonData);
+      } else {
+        const getPokemon = async () => {
+          const url = `${getBaseUrl()}/${id}/`;
+          const res = await fetch(url);
+          const data = await res.json();
+          setPokemon({
+            data,
+            url,
+          });
+        };
+        getPokemon();
+      }
     }
   }, []);
-
-  useEffect(() => {
-    if (!pokemon && id) {
-      const getPokemon = async () => {
-        const url = `${getBaseUrl()}/${id}/`;
-        const res = await fetch(url);
-        const data = await res.json();
-        setPokemon({
-          data,
-          url,
-        });
-      };
-      getPokemon();
-    }
-  }, [pokemon, id]);
-
-  console.log({ pokemon });
 
   return (
     <div>

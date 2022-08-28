@@ -11,7 +11,9 @@ function Pokemons() {
     useStore();
 
   useEffect(() => {
-    setInitialStates();
+    if (pokemons.length <= 0) {
+      setInitialStates();
+    }
   }, []);
 
   console.log(useStore());
@@ -43,7 +45,7 @@ function Pokemons() {
             </div>
           ) : null}
         </>
-      ) : (
+      ) : loading ? null : (
         "no pokemons found"
       )}
     </>
