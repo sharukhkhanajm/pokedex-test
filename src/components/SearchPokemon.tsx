@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { getBaseUrl } from "../utils";
 import { useStore } from "../zustand/pokemon.store";
 
@@ -18,8 +18,10 @@ const debounce = <F extends (...args: Parameters<F>) => ReturnType<F>>(
 
 function SearchPokemon() {
   const { updateStore, setInitialStates } = useStore();
+  const [error, setError] = useState("");
 
   const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setError("");
     try {
       const { value } = e.target;
       if (!value) {
@@ -29,6 +31,7 @@ function SearchPokemon() {
       const url = `${getBaseUrl()}/${value}`;
       const res = await fetch(url);
       const data = await res.json();
+      setError("");
       updateStore({
         pokemons: [
           {
@@ -42,7 +45,7 @@ function SearchPokemon() {
         pageNumber: 1,
       });
     } catch (e) {
-      console.log(e);
+      setError("Please check the Pokemon name");
     }
   };
 
@@ -51,19 +54,22 @@ function SearchPokemon() {
   }, [onChange]);
 
   return (
-    <div className="mx-24 my-10">
-      <label htmlFor="search-pokemon" className="sr-only">
-        Search Pokemon
-      </label>
-      <input
-        onChange={debouncedFunc}
-        type="text"
-        name="search-pokemon"
-        id="search-pokemon"
-        className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-        placeholder="Search Pokemon Here..."
-      />
-    </div>
+    <>
+      <div className="mx-24 my-10">
+        <p className="text-red-400 mb-4 font-semibold">{error}</p>
+        <label htmlFor="search-pokemon" className="sr-only">
+          Search Pokemon
+        </label>
+        <input
+          onChange={debouncedFunc}
+          type="text"
+          name="search-pokemon"
+          id="search-pokemon"
+          className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+          placeholder="Search Pokemon Here..."
+        />
+      </div>
+    </>
   );
 }
 
